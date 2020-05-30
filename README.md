@@ -153,3 +153,44 @@
 - @route   DELETE /api/admin/todo/:id
 - @desc    Удаление todo залогиненого юзера
 - @access  Private
+
+# MERN SHOP
+
+## API
+
+### AUTH
+
+#### Get auth user
+> GET /api/admin/auth
+- Auth
+
+#### Authenticate user & get token
+> POST /api/admin/auth
+- Auth
+
+### USERS
+
+#### Создание админа или работника
+> POST /api/admin/users
+- Admin
+
+#### Список работников и админов по perPage||10 на page||1
+> GET /api/admin/users/list/:page/:perPage
+- Admin
+
+#### Просмотр сотрудника или админа по id
+> GET /api/admin/users/:id
+- Admin
+
+#### Удаление сотрудника или админа по id
+> DELETE /api/admin/users/:id
+- Admin
+
+### News
+
+
+### Feedback
+
+
+### Goods
+

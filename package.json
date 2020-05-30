@@ -6,10 +6,10 @@
   "author": "100pecheneK <mistermihail23@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prod": "node server.js",
+    "start": "node server.js",
     "devserver": "nodemon server.js",
     "devclient": "yarn --cwd ./client start ",
-    "start": "concurrently \"yarn run devserver\" \"yarn run devclient\""
+    "dev": "concurrently \"yarn run devserver\" \"yarn run devclient\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -20,6 +20,7 @@
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.14",
+    "mongoose-paginate-v2": "^1.3.9",
     "request": "^2.88.2"
   },
   "devDependencies": {
