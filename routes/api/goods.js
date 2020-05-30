@@ -7,7 +7,6 @@ const router = express.Router()
 const adminOnly = require('../../middleware/adminOnly')
 const fs = require('fs')
 const path = require('path')
-const good = require('../../models/good')
 const auth = require('../../middleware/auth')
 const Good = require('../../models/Good')
 const chalk = require('chalk')
@@ -37,7 +36,7 @@ router.get(
                 page: parseInt(page, 10) || 1,
                 limit: parseInt(perPage, 10) || config.get('goodPerPage'),
             }
-            const goods = await good.paginate({}, options)
+            const goods = await Good.paginate({}, options)
 
             return res.json(goods)
         } catch (e) {
@@ -63,7 +62,7 @@ router.get(
             res.status(500).send('Ошибка сервера')
         }
     })
-
+//TODO: Добавить проверку на существование категории
 router.post(
     '/',
     [
@@ -88,7 +87,7 @@ router.post(
                 return res.status(400).json({msg: 'Код товара должен быть уникальным'})
             }
             const goodFields = makeGoodFields(req)
-            good = new good(goodFields)
+            good = new Good(goodFields)
             await good.save()
 
             return res.json(good)
@@ -97,7 +96,7 @@ router.post(
             res.status(500).send('Ошибка сервера')
         }
     })
-
+//TODO: Добавить проверку на существование категории
 router.patch(
     '/:id',
     [
@@ -118,6 +117,11 @@ router.patch(
                 return res.status(404).json({msg: 'Товар не найден'})
             }
 
+            const goodWithSimilarNumber = await Good.findOne({goodNumbed: req.body.goodNumber})
+
+            if (goodWithSimilarNumber && good.id !== goodWithSimilarNumber.id) {
+                return res.status(404).json({msg: 'Код товара должен быть уникальным'})
+            }
             // Удалить лишние фото
             good.images.forEach(img => {
                 if (path.basename(img) === 'default') {
@@ -134,7 +138,7 @@ router.patch(
             })
 
             const goodFields = makeGoodFields(req)
-            await good.findByIdAndUpdate(
+            await Good.findByIdAndUpdate(
                 {_id: req.params.id},
                 {$set: goodFields})
 
@@ -151,7 +155,7 @@ router.delete(
     '/:id',
     async (req, res) => {
         try {
-            const good = await good.findById(req.params.id)
+            const good = await Good.findById(req.params.id)
             if (!good) {
                 return res.status(404).json({msg: 'Товар не найден'})
             }
