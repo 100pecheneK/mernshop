@@ -1,4 +1,7 @@
 {
-  "mongoURI": "mongodb://127.0.0.1:27017/mernshop",
-  "jwtSecret": "secretToken"
+  "mongoURI": "mongodb://127.0.0.1:27017/product",
+  "jwtSecret": "secretToken",
+  "goodPerPage": 10,
+  "categoryPerPage": 10,
+  "userPerPage": 10
 }
