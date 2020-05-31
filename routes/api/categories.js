@@ -1,15 +1,11 @@
 const express = require('express')
-const request = require('request')
 const config = require('config')
 const router = express.Router()
 const {check, validationResult} = require('express-validator')
 const auth = require('../../middleware/auth')
 const Good = require('../../models/Good')
 const Category = require('../../models/Category')
-const fs = require('fs')
-const path = require('path')
-const rimraf = require('rimraf')
-const {BASE_DIR} = require('../../constants')
+const utils = require('../../utils')
 
 router.get(
     '/',
@@ -93,6 +89,9 @@ router.patch(
             return res.json(category)
         } catch (e) {
             console.error(e.message)
+            if (e.kind === 'ObjectId') {
+                return res.status(400).json({msg: 'Категория не найдена'})
+            }
             res.status(500).send('Ошибка сервера')
         }
     })
@@ -102,21 +101,15 @@ router.delete(
     auth,
     async (req, res) => {
         try {
-            const category = Category.findById(req.params.id)
+            const category = await Category.findById(req.params.id)
             if (!category) {
                 return res.status(400).json({msg: 'Категория не найдена'})
             }
 
-            await Goos.deleteMany({category: req.params.id})
+            await Good.deleteMany({category: req.params.id})
 
-            const goodImgsPath = path.dirname(path.join(UPLOAD_PATH, 'uploads', category.name))
-            if (BASE_DIR !== goodImgsPath) {
-                if (!path.parse(goodImgsPath).base !== 'default') {
-                    console.log('delete: ', goodImgsPath)
+            utils.rmCategoryDir(category.id)
 
-                    // rimraf(goodImgsPath, () => true)
-                }
-            }
 
             await category.remove()
 
@@ -124,6 +117,9 @@ router.delete(
             return res.json({msg: 'Категория удалёна'})
         } catch (e) {
             console.error(e.message)
+            if (e.kind === 'ObjectId') {
+                return res.status(400).json({msg: 'Категория не найдена'})
+            }
             res.status(500).send('Ошибка сервера')
         }
     })

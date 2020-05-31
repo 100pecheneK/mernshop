@@ -1,18 +1,12 @@
 const express = require('express')
 const {check, validationResult} = require('express-validator')
-const jwt = require('jsonwebtoken')
 const config = require('config')
-const bcrypt = require('bcryptjs')
 const router = express.Router()
-const adminOnly = require('../../middleware/adminOnly')
-const fs = require('fs')
-const path = require('path')
 const auth = require('../../middleware/auth')
 const Good = require('../../models/Good')
-const chalk = require('chalk')
+const Category = require('../../models/Category')
 const upload = require('../../middleware/upload')
-const rimraf = require('rimraf')
-const {BASE_DIR} = require('../../constants')
+const utils = require('../../utils')
 
 const makeGoodFields = req => {
     const {category, name, description, price, salePrice, goodNumber} = req.body
@@ -27,6 +21,8 @@ const makeGoodFields = req => {
     if (images) goodFields.images = images
     return goodFields
 }
+
+
 router.get(
     '/',
     async (req, res) => {
@@ -35,6 +31,7 @@ router.get(
             const options = {
                 page: parseInt(page, 10) || 1,
                 limit: parseInt(perPage, 10) || config.get('goodPerPage'),
+                populate: {path: 'category', select: 'name'}
             }
             const goods = await Good.paginate({}, options)
 
@@ -62,7 +59,6 @@ router.get(
             res.status(500).send('Ошибка сервера')
         }
     })
-//TODO: Добавить проверку на существование категории
 router.post(
     '/',
     [
@@ -82,6 +78,10 @@ router.post(
             return res.status(400).json({errors: errors.array()})
         }
         try {
+            const category = await Category.findById(req.body.category)
+            if (!category) {
+                return res.status(400).json({msg: 'Категория не найдена'})
+            }
             let good = await Good.findOne({goodNumber: req.body.goodNumber})
             if (good) {
                 return res.status(400).json({msg: 'Код товара должен быть уникальным'})
@@ -89,14 +89,18 @@ router.post(
             const goodFields = makeGoodFields(req)
             good = new Good(goodFields)
             await good.save()
+            good = await Good.findById(good.id).populate({path: 'category', select: 'name'})
 
             return res.json(good)
         } catch (e) {
             console.error(e.message)
+            if (e.kind === 'ObjectId') {
+                return res.status(400).json({msg: 'Категория не найдена'})
+            }
             res.status(500).send('Ошибка сервера')
         }
     })
-//TODO: Добавить проверку на существование категории
+
 router.patch(
     '/:id',
     [
@@ -112,6 +116,10 @@ router.patch(
     ],
     async (req, res) => {
         try {
+            const category = await Category.findById(req.body.category)
+            if (!category) {
+                return res.status(400).json({msg: 'Категория не найдена'})
+            }
             let good = await Good.findById(req.params.id)
             if (!good) {
                 return res.status(404).json({msg: 'Товар не найден'})
@@ -123,30 +131,21 @@ router.patch(
                 return res.status(404).json({msg: 'Код товара должен быть уникальным'})
             }
             // Удалить лишние фото
-            good.images.forEach(img => {
-                if (path.basename(img) === 'default') {
-                    return
-                }
-                const imgPath = path.join(BASE_DIR, img)
-                if (imgPath === BASE_DIR) return
-                try {
-                    console.log('delete: ', imgPath)
-                    // fs.unlinkSync(imgPath)
-                } catch (e) {
-
-                }
-            })
+            good.images.forEach(img => utils.rmGoodsImg(img))
 
             const goodFields = makeGoodFields(req)
             await Good.findByIdAndUpdate(
                 {_id: req.params.id},
                 {$set: goodFields})
 
-            good = await Good.findById(req.params.id)
+            good = await Good.findById(req.params.id).populate({path: 'category', select: 'name'})
 
             return res.json(good)
         } catch (e) {
             console.error(e.message)
+            if (e.kind === 'ObjectId') {
+                return res.status(400).json({msg: 'Категория не найдена'})
+            }
             res.status(500).send('Ошибка сервера')
         }
     })
@@ -159,15 +158,7 @@ router.delete(
             if (!good) {
                 return res.status(404).json({msg: 'Товар не найден'})
             }
-            if (good.images) {
-                const goodImgsPath = path.dirname(path.join(BASE_DIR, good.images[0]))
-                if (goodImgsPath !== BASE_DIR) {
-                    if (!path.parse(goodImgsPath).base !== 'default') {
-                        console.log('delete: ', goodImgsPath)
-                        // rimraf(goodImgsPath, () => true)
-                    }
-                }
-            }
+            utils.rmGoodsDir(good)
             good.remove()
 
             return res.json({msg: 'Товар удалён'})

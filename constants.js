@@ -1,3 +1,4 @@
+const path = require('path')
 const BASE_DIR = __dirname
-
-module.exports = { BASE_DIR }
+const UPLOAD_DIR = path.join(BASE_DIR, 'upload')
+module.exports = { BASE_DIR, UPLOAD_DIR }
