@@ -7,6 +7,11 @@ const Good = require('../../models/Good')
 const Category = require('../../models/Category')
 const utils = require('../../utils')
 
+/**
+ *  @route GET /api/admin/categories
+ *  @desc Просмотр категорий
+ *  @access auth
+ */
 router.get(
     '/',
     auth,
@@ -25,6 +30,11 @@ router.get(
         }
     })
 
+/**
+ *  @route POST /api/admin/goods
+ *  @desc Создание категории
+ *  @access auth
+ */
 router.post(
     '/',
     [
@@ -50,6 +60,11 @@ router.post(
         }
     })
 
+/**
+ *  @route GET /api/admin/categories/id
+ *  @desc Просмотр категории по id
+ *  @access auth
+ */
 router.get(
     '/:id',
     auth,
@@ -69,6 +84,11 @@ router.get(
         }
     })
 
+/**
+ *  @route PATCH /api/admin/categories/id
+ *  @desc Изменение категории по id
+ *  @access auth
+ */
 router.patch(
     '/:id',
     [
@@ -96,6 +116,11 @@ router.patch(
         }
     })
 
+/**
+ *  @route DELETE /api/admin/categories/id
+ *  @desc Удаление категории по id
+ *  @access auth
+ */
 router.delete(
     '/:id',
     auth,

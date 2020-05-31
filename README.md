@@ -186,11 +186,52 @@
 > DELETE /api/admin/users/:id
 - Admin
 
+### Goods
+
+#### Просмотр товаров
+> GET /api/admin/goods
+- Auth
+
+#### Просмотр товара по id
+> GET /api/admin/goods/:id
+- Auth
+
+#### Создание товаров
+> POST /api/admin/goods
+- Auth
+
+#### Изменение товара по id
+> PATCH /api/admin/goods/:id
+- Auth
+
+#### Удаление товара по id
+> DELETE /api/admin/goods/id
+- Auth
+
+
+### Category
+
+#### Просмотр категорий
+> GET /api/admin/categories
+- Auth
+
+#### Создание категории
+> POST /api/admin/goods
+- Auth
+
+#### Просмотр категории по id
+> GET /api/admin/categories/id
+- Auth
+
+#### Изменение категории по id
+> PATCH /api/admin/categories/id
+- Auth
+
+#### Удаление категории по id
+> DELETE /api/admin/categories/id
+- Auth
+
 ### News
 
 
 ### Feedback
-
-
-### Goods
-
