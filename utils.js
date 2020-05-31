@@ -29,7 +29,7 @@ const utils = {
         const goodsPath = path.join(UPLOAD_DIR, `${category}`, `${goodNumber}`)
         if (goodsPath > BASE_DIR && goodsPath > UPLOAD_DIR) {
             if (path.parse(goodsPath).base !== 'default') {
-                rimraf(goodImgsPath, () => true)
+                rimraf(goodsPath, () => true)
             }
         }
     }

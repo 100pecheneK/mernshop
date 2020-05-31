@@ -15,14 +15,18 @@ const makeGoodFields = req => {
     if (category) goodFields.category = category
     if (name) goodFields.name = name
     if (description) goodFields.description = description
-    if (price) goodFields.price = price
+    if (price >= 0) goodFields.price = price
     if (salePrice) goodFields.salePrice = salePrice
     if (goodNumber) goodFields.goodNumber = goodNumber
     if (images) goodFields.images = images
     return goodFields
 }
 
-
+/**
+ *  @route GET /api/admin/goods
+ *  @desc Просмотр товаров
+ *  @access auth
+ */
 router.get(
     '/',
     async (req, res) => {
@@ -34,7 +38,6 @@ router.get(
                 populate: {path: 'category', select: 'name'}
             }
             const goods = await Good.paginate({}, options)
-
             return res.json(goods)
         } catch (e) {
             console.error(e.message)
@@ -42,6 +45,11 @@ router.get(
         }
     })
 
+/**
+ *  @route GET /api/admin/goods/:id
+ *  @desc Просмотр товара по id
+ *  @access auth
+ */
 router.get(
     '/:id',
     async (req, res) => {
@@ -59,6 +67,12 @@ router.get(
             res.status(500).send('Ошибка сервера')
         }
     })
+
+/**
+ *  @route POST /api/admin/goods
+ *  @desc Создание товаров
+ *  @access auth
+ */
 router.post(
     '/',
     [
@@ -101,6 +115,11 @@ router.post(
         }
     })
 
+/**
+ *  @route PATCH /api/admin/goods/:id
+ *  @desc Изменение товара по id
+ *  @access auth
+ */
 router.patch(
     '/:id',
     [
@@ -150,6 +169,11 @@ router.patch(
         }
     })
 
+/**
+ *  @route DELETE /api/admin/goods/id
+ *  @desc Удаление товара по id
+ *  @access auth
+ */
 router.delete(
     '/:id',
     async (req, res) => {
