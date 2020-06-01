@@ -29,8 +29,7 @@ const GoodSchema = new Schema({
     },
     images: {
         type: [String],
-        required: true,
-        default: ['uploads/default/default.jpg']
+        default: 'uploads/default/default.jpg'
     },
     date: {
         type: Date,
