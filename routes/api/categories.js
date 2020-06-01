@@ -31,7 +31,7 @@ router.get(
     })
 
 /**
- *  @route POST /api/admin/goods
+ *  @route POST /api/admin/adminGoods
  *  @desc Создание категории
  *  @access auth
  */

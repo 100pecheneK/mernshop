@@ -1,0 +1,1 @@
+export default (txt, color)=>window.M.toast({html: txt, classes:color})

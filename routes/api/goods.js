@@ -25,7 +25,7 @@ const makeGoodFields = req => {
 
 
 /**
- *  @route POST /api/admin/goods
+ *  @route POST /api/admin/adminGoods
  *  @desc Создание товаров
  *  @access auth
  */
@@ -70,7 +70,7 @@ router.post(
     })
 
 /**
- *  @route PATCH /api/admin/goods/:id
+ *  @route PATCH /api/admin/adminGoods/:id
  *  @desc Изменение товара по id
  *  @access auth
  */
@@ -127,7 +127,7 @@ router.patch(
     })
 
 /**
- *  @route DELETE /api/admin/goods/id
+ *  @route DELETE /api/admin/adminGoods/id
  *  @desc Удаление товара по id
  *  @access auth
  */
@@ -154,7 +154,7 @@ router.delete(
 
 
 /**
- *  @route GET /api/admin/goods
+ *  @route GET /api/admin/adminGoods
  *  @desc Просмотр товаров
  *  @access auth
  */
@@ -169,6 +169,7 @@ router.get(
                 populate: {path: 'category', select: 'name'}
             }
             const goods = await Good.paginate({}, options)
+
             return res.json(goods)
         } catch (e) {
             console.error(e.message)
@@ -177,7 +178,7 @@ router.get(
     })
 
 /**
- *  @route GET /api/admin/goods/:id
+ *  @route GET /api/admin/adminGoods/:id
  *  @desc Просмотр товара по id
  *  @access auth
  */
