@@ -14,7 +14,13 @@ const Sidebar = ({logout}) => {
                 <Link to='/admin'>Главная</Link>
             </li>
             <li>
-                <Link to='/admin/accounts'>Аккаунты</Link>
+                <Link to='/admin/accounts/list'>Аккаунты</Link>
+            </li>
+            <li>
+                <Link to='/admin/goods/list'>Товары</Link>
+            </li>
+            <li>
+                <Link to='/admin/categories/list'>Категории</Link>
             </li>
             <li>
                 <a href="#!" onClick={logout}>Выйти</a>

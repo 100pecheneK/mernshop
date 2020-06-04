@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import {Redirect, Route} from "react-router-dom"
 import Spinner from "../layout/Spinner"
 import SpinnerLinear from "../layout/SpinnerLinear"
+import ErrorBoundary from "../layout/ErrorBoundary"
 
 const PrivateRoute = ({
                           component: Component,
@@ -16,7 +17,6 @@ const PrivateRoute = ({
                 return <SpinnerLinear/>
             } else if (!isAuthenticated) {
                 return <Redirect to='/admin/login'/>
-
             } else {
                 return <Component {...props}/>
             }
@@ -32,6 +32,7 @@ PrivateRoute.propTypes = {
 const mapStateToProps = state => ({
     auth: state.auth
 })
+
 export default connect(
     mapStateToProps
 )(PrivateRoute)

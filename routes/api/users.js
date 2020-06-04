@@ -57,23 +57,10 @@ router.post(
             userFields.password = await bcrypt.hash(password, salt)
 
             user = new User(userFields)
+
             await user.save()
 
-            // Return jsonwebtoken
-            const payload = {
-                user: {
-                    id: user.id
-                }
-            }
-            jwt.sign(
-                payload,
-                config.get('jwtSecret'),
-                {expiresIn: '1h'},
-                (err, token) => {
-                    if (err) throw err
-                    res.json({token})
-                }
-            )
+            return res.json({msg: 'Пользователь создан'})
         } catch (e) {
             console.error(e.message)
             res.status(500).send('Ошибка сервера')
@@ -93,7 +80,8 @@ router.get(
             const options = {
                 page: parseInt(page, 10) || 1,
                 limit: parseInt(perPage, 10) || 5,
-                select: '-password'
+                select: '-password',
+                sort: {date: -1}
             }
             const users = await User.paginate({}, options)
             return res.json(users)

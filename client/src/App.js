@@ -9,15 +9,24 @@ import AdminRoutes from "./components/routing/AdminRoutes"
 import store from "./store"
 import Login from "./components/admin/auth/login"
 import {loadUser} from "./actions/admin/auth"
+import ErrorBoundary from "./components/layout/ErrorBoundary"
+import history from "./history"
 
 function App() {
     useEffect(() => {
+        const ele = document.getElementById('ipl-progress-indicator')
+        if (ele) {
+            ele.classList.add('available')
+            setTimeout(() => {
+                ele.outerHTML = ''
+            }, 2000)
+        }
         store.dispatch(loadUser())
     }, [])
     return (
-        <>
+        <ErrorBoundary>
             <Provider store={store}>
-                <Router>
+                <Router history={history}>
                     <Switch>
                         <Route exact path='/admin/login' component={Login}/>
                         <Route path='/admin' component={AdminRoutes}/>
@@ -26,7 +35,7 @@ function App() {
                     </Switch>
                 </Router>
             </Provider>
-        </>
+        </ErrorBoundary>
     )
 }
 

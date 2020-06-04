@@ -1,25 +1,29 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import SpinnerLinear from "../../layout/SpinnerLinear"
 import Pagination from "../../layout/Pagination"
 import {Link} from "react-router-dom"
 import {connect} from "react-redux"
-import {getUsers} from "../../../actions/admin/users"
+import {deleteUser, getUsers} from "../../../actions/admin/users"
 import Spinner from "../../layout/Spinner"
+import Header from "../Header/Header"
 
 const Accounts = ({
-                      match, getUsers,
-                      users: {loading, users: {docs, totalPages, page, totalDocs, limit}}
+                      match, getUsers, deleteUser,
+                      users: {loading, users: {docs, totalPages, page, limit}}
                   }) => {
+
     useEffect(() => {
         getUsers(match.params.page)
     }, [getUsers, match.params.page])
 
-
     return (
         <>
-            <Link to='/admin/accounts/create'>Создать аккаунт</Link>
-            {loading ? <Spinner/> :
+            <Header title='Аккаунты' link='/admin/accounts/create' linkName='Создать аккаунт'/>
+            <button className='waves-effect waves-light btn red lighten-5 black-text'
+                    onClick={() => getUsers(match.params.page)}>
+                <i className="material-icons">sync</i></button>
+            {loading ? <SpinnerLinear/> :
                 (
                     <>
                         <table>
@@ -40,7 +44,9 @@ const Accounts = ({
                                     <td>{doc.name}</td>
                                     <td>{doc.email}</td>
                                     <td>{doc.isAdmin ? 'Админ' : 'Сотрудник'}</td>
-                                    <td><a className="waves-effect waves-light btn red">Удалить</a>
+                                    <td><a className="waves-effect waves-light btn red"
+                                           onClick={() => deleteUser(doc._id)}
+                                    >Удалить</a>
                                     </td>
                                 </tr>
                             ))}
@@ -48,7 +54,7 @@ const Accounts = ({
                             </tbody>
                         </table>
                         <Pagination
-                            path={'/admin/accounts'}
+                            path={'/admin/accounts/list'}
                             totalPages={totalPages}
                             currentPage={page}
                         />
@@ -61,6 +67,7 @@ const Accounts = ({
 
 Accounts.propTypes = {
     getUsers: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
     users: PropTypes.object.isRequired,
 }
 const mapStateToProps = state => ({
@@ -69,5 +76,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getUsers}
+    {getUsers, deleteUser}
 )(Accounts)

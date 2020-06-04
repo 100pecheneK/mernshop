@@ -8,6 +8,23 @@ const Category = require('../../models/Category')
 const utils = require('../../utils')
 
 /**
+ *  @route GET /api/admin/categories/all
+ *  @desc Просмотр категорий
+ *  @access auth
+ */
+router.get(
+    '/all',
+    auth,
+    async (req, res) => {
+        try {
+            const category = await Category.find()
+            return res.json(category)
+        } catch (e) {
+            console.error(e.message)
+            res.status(500).send('Ошибка сервера')
+        }
+    })
+/**
  *  @route GET /api/admin/categories
  *  @desc Просмотр категорий
  *  @access auth
@@ -21,6 +38,7 @@ router.get(
             const options = {
                 page: parseInt(page, 10) || 1,
                 limit: parseInt(perPage, 10) || config.get('categoryPerPage'),
+                sort: {date: -1}
             }
             const category = await Category.paginate({}, options)
             return res.json(category)

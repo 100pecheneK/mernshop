@@ -18,6 +18,10 @@ const GoodSchema = new Schema({
         type: Number,
         required: true
     },
+    count: {
+        type: Number,
+        required: true
+    },
     salePrice: {
         type: Number,
         default: 0
