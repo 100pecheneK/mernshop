@@ -14,10 +14,11 @@ const AccountCreate = ({createUser, loading}) => {
         name: '',
         email: '',
         password: '',
-        password2: ''
+        password2: '',
+        isAdmin: '',
     })
 
-    const {name, email, password, password2} = formData
+    const {name, email, isAdmin, password, password2} = formData
 
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value})
 
@@ -29,7 +30,7 @@ const AccountCreate = ({createUser, loading}) => {
         if (password !== password2) {
             alert('Пароли не совпадают', 'red')
         } else {
-            createUser({name, email, password})
+            createUser({name, email, isAdmin, password})
         }
     }
 
@@ -47,8 +48,18 @@ const AccountCreate = ({createUser, loading}) => {
                             type="text"
                             placeholder="Имя"
                             required={true}
+                            s={8}
                             icon='account_circle'
                         />
+                         <div className='input-field col s4'>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name='isAdmin'
+                                        onChange={onChange}/>
+                                    <span>Админ</span>
+                                </label>
+                            </div>
                         <InputField
                             name='email'
                             onChange={onChange}

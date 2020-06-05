@@ -16,10 +16,17 @@ import GoodsEdit from '../admin/goods/GoodsEdit'
 import Categories from '../admin/categories/Categories'
 import CategoryCreate from '../admin/categories/CategoryCreate'
 import CategoryEdit from '../admin/categories/CategoryEdit'
+import PropTypes from "prop-types"
+import {connect} from "react-redux"
+import {logout} from "../../actions/admin/auth"
+import SettingsCreate from "../admin/settings/SettingsCreate"
+import Settings from "../admin/settings/Settings"
 
 
 const AdminHome = () => (
-    <h1>AdminHome<SpinnerLinear/></h1>
+    <>
+        <h1>AdminHome</h1>
+    </>
 )
 
 if (localStorage.token) {
@@ -35,14 +42,15 @@ const AdminRoutes = () => {
                     <div className="row">
                         <ErrorBoundary>
                             <Switch>
-                                <PrivateRoute exact path='/admin' component={AdminHome}/>
-
-                                <PrivateRoute exact path='/admin/accounts/list'
+                                <PrivateRoute admin={true} exact path='/admin'
+                                              component={AdminHome}/>
+                                <PrivateRoute admin={true} exact path='/admin/accounts/list'
                                               component={Accounts}/>
-                                <PrivateRoute exact path='/admin/accounts/create'
+                                <PrivateRoute admin={true} exact path='/admin/accounts/create'
                                               component={AccountCreate}/>
-                                <PrivateRoute path='/admin/accounts/list/:page'
+                                <PrivateRoute admin={true} path='/admin/accounts/list/:page'
                                               component={Accounts}/>
+
 
                                 <PrivateRoute exact path='/admin/goods/list' component={Goods}/>
                                 <PrivateRoute path='/admin/goods/list/:page' component={Goods}/>
@@ -58,6 +66,9 @@ const AdminRoutes = () => {
                                               component={CategoryCreate}/>
                                 <PrivateRoute path='/admin/categories/:id'
                                               component={CategoryEdit}/>
+
+                                <PrivateRoute admin={true} exact path='/admin/settings'
+                                              component={Settings}/>
                             </Switch>
                         </ErrorBoundary>
                     </div>
@@ -66,4 +77,6 @@ const AdminRoutes = () => {
         </>
     )
 }
+
+
 export default AdminRoutes

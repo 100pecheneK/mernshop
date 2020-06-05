@@ -12,8 +12,9 @@ import {createGood, editGood, getGood, resetUpload} from "../../../actions/admin
 import ProgressBar from "../../layout/ProgressBar"
 import {getAllCategories} from "../../../actions/admin/categories"
 import Spinner from "../../layout/Spinner"
+import {checkFileSize, checkMimeType, maxSelectFile} from "../../../utils/upload"
 
-const GoodCreate = ({editGood, good, loading, upload, match, getGood, resetUpload, getAllCategories, categories: {allCategories: categories, loading: categoriesLoading}}) => {
+const GoodEdit = ({editGood, good, loading, upload, match, getGood, resetUpload, getAllCategories, categories: {allCategories: categories, loading: categoriesLoading}}) => {
     const [formData, setFormData] = useState({
         name: '',
         category: '',
@@ -24,6 +25,7 @@ const GoodCreate = ({editGood, good, loading, upload, match, getGood, resetUploa
     })
     const [images, setImages] = useState('')
     const [imagesPreview, setImagesPreview] = useState('')
+    const [fileClasses, setFileClasses] = useState('')
     const {
         name,
         category,
@@ -34,46 +36,7 @@ const GoodCreate = ({editGood, good, loading, upload, match, getGood, resetUploa
     } = formData
 
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value})
-    const checkMimeType = (e) => {
-        let files = e.target.files
-        let err = []
-        const types = ['image/png', 'image/jpeg']
-        for (let x = 0; x < files.length; x++) {
-            if (types.every(type => files[x].type !== type)) {
-                err[x] = files[x].type + ' не поддерживаемый формат\n'
-            }
-        }
-        for (let z = 0; z < err.length; z++) {
-            alert(err[z])
-            e.target.value = null
-        }
-        return true
-    }
-    const maxSelectFile = (e) => {
-        let files = e.target.files
-        if (files.length > 5) {
-            const msg = 'Можно загрузить только 5 изображения'
-            e.target.value = null
-            alert(msg, 'red')
-            return false
-        }
-        return true
-    }
-    const checkFileSize = (e) => {
-        let files = e.target.files
-        let size = 2000000
-        let err = []
-        for (let x = 0; x < files.length; x++) {
-            if (files[x].size > size) {
-                err[x] = files[x].type + 'слишком больше изобрежние\n'
-            }
-        }
-        for (let z = 0; z < err.length; z++) {
-            alert(err[z], 'red')
-            e.target.value = null
-        }
-        return true
-    }
+
     const onChangeImages = e => {
         if (maxSelectFile(e) && checkMimeType(e) && checkFileSize(e)) {
             setImages(e.target.files)
@@ -90,7 +53,6 @@ const GoodCreate = ({editGood, good, loading, upload, match, getGood, resetUploa
     }, [getGood, match.params.id])
 
     useEffect(() => {
-        console.log(categoriesLoading, loading)
         if (!categoriesLoading && !loading) {
             setFormData(prev => ({
                 ...prev,
@@ -138,8 +100,8 @@ const GoodCreate = ({editGood, good, loading, upload, match, getGood, resetUploa
     }
     return (
         <>
-            {loading && <SpinnerLinear/>}
             <Header title='Редактирование товара' link='/admin/goods/list' linkName='Назад'/>
+            {loading && <SpinnerLinear/>}
             <div className="row">
                 <Form onSubmit={onSubmit} className="col s12">
                     <div className="row">
@@ -208,10 +170,19 @@ const GoodCreate = ({editGood, good, loading, upload, match, getGood, resetUploa
                     </div>
                     <div className="row">
                         <InputField
-                            classes="files"
+                            classes={`files ${fileClasses}`}
                             type="file"
                             multiple
                             req={false}
+                            onDragEnter={() => {
+                                setFileClasses('files-enter')
+                            }}
+                            onDrop={() => {
+                                setFileClasses('files-in')
+                            }}
+                            onDragLeave={() => {
+                                setFileClasses('')
+                            }}
                             onChange={onChangeImages}
                         />
                         <ProgressBar progress={Math.round(upload, 2)}/>
@@ -224,7 +195,7 @@ const GoodCreate = ({editGood, good, loading, upload, match, getGood, resetUploa
     )
 }
 
-GoodCreate.propTypes = {
+GoodEdit.propTypes = {
     editGood: PropTypes.func.isRequired,
     resetUpload: PropTypes.func.isRequired,
     getAllCategories: PropTypes.func.isRequired,
@@ -242,4 +213,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     {editGood, getGood, resetUpload, getAllCategories}
-)(GoodCreate)
+)(GoodEdit)

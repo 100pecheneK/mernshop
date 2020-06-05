@@ -7,12 +7,12 @@ const Header = ({title, link = '', linkName = ''}) => {
         <nav>
             <div className="nav-wrapper">
                 <h1 className="brand-logo">{title}</h1>
+                {link && linkName &&
                 <div className="nav-right">
                     <Link to={link} className="waves-effect waves-light btn">
                         {linkName}
                     </Link>
-
-                </div>
+                </div>}
             </div>
         </nav>
     )

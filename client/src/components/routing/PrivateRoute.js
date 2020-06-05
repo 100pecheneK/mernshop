@@ -8,22 +8,27 @@ import ErrorBoundary from "../layout/ErrorBoundary"
 
 const PrivateRoute = ({
                           component: Component,
-                          auth: {isAuthenticated, loading},
+                          auth: {isAuthenticated, loading, user},
+                          admin = false,
                           ...rest
-                      }) => (
-    <Route {...rest} render={
-        props => {
-            if (loading) {
-                return <SpinnerLinear/>
-            } else if (!isAuthenticated) {
-                return <Redirect to='/admin/login'/>
-            } else {
-                return <Component {...props}/>
+                      }) => {
+    return (
+        <Route {...rest} render={
+            props => {
+                if (loading) {
+                    return <SpinnerLinear/>
+                } else if (!isAuthenticated) {
+                    return <Redirect to='/admin/login'/>
+                } else if (admin && !user?.isAdmin) {
+                    return <Redirect to='/admin'/>
+                } else {
+                    return <Component {...props}/>
+                }
             }
         }
-    }
-    />
-)
+        />
+    )
+}
 
 PrivateRoute.propTypes = {
     auth: PropTypes.object.isRequired,

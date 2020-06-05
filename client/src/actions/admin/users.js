@@ -13,16 +13,15 @@ import alert from "../../utils/alert"
 import showErrors from "../../utils/showErrors"
 import history from "../../history"
 
-export const createUser = ({name, email, password}) => async dispatch => {
+export const createUser = formData => async dispatch => {
     const config = makeConfig()
-    const body = makeBody({name, email, password})
     dispatch({type: USER_LOADING})
     try {
-        await axios.post('/api/admin/users', body, config)
+        await axios.post('/api/admin/users', formData, config)
         dispatch({
             type: CREATE_USER_SUCCESS,
         })
-        alert(`${name} создан!`, 'green')
+        alert(`${formData.name} создан!`, 'green')
         history.push('/admin/accounts/list')
     } catch (e) {
         const errors = e.response.data.errors

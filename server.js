@@ -15,6 +15,7 @@ app.get('/', (req, res) => res.send('API Running'))
 
 // Define Routes
 app.use('/uploads', express.static('uploads'))
+app.use('/api/admin/settings', require('./routes/api/settings'))
 app.use('/api/admin/auth', require('./routes/api/auth'))
 app.use('/api/admin/users', require('./routes/api/users'))
 app.use('/api/admin/categories', require('./routes/api/categories'))

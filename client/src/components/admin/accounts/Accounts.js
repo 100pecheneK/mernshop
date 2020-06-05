@@ -38,7 +38,7 @@ const Accounts = ({
                             </thead>
                             <tbody>
 
-                            {docs.map((doc, i) => (
+                            {docs.length && docs.map((doc, i) => (
                                 <tr key={doc._id}>
                                     <td>{(i + 1) + limit * (page - 1)}</td>
                                     <td>{doc.name}</td>

@@ -1,18 +1,20 @@
 import {Link, Route, Switch} from "react-router-dom"
 import React from "react"
+import Home from "../client/home/Home"
+import './client.css'
 
-const Home = () => (
-    <>
-        <Link to='/home2'>home2</Link>
-        <Link to='/admin'>admin</Link>
-        <h1>Home</h1>
-    </>
-)
 const Home2 = () => (
     <>
-        <Link to='/'>home</Link>
-        <Link to='/admin'>admin</Link>
-        <h1>Home2</h1>
+        <ul>
+            <li>
+                <Link to='/'>Страница 1</Link>
+            </li>
+            <li>
+                <Link to='/admin'>admin</Link>
+            </li>
+        </ul>
+
+        <h1>Страница 2</h1>
     </>
 )
 const ClientRoutes = () => (

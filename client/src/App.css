@@ -111,3 +111,13 @@ nav {
     text-transform: capitalize;
     text-align: center;
 }
+
+.files-enter input {
+    outline: 2px dashed #FD6469;
+    outline-offset: -5px;
+}
+
+.files-in input {
+    outline: 5px dashed #92b0b3;
+    outline-offset: -5px;
+}
