@@ -3,34 +3,24 @@ import React, {useEffect} from "react"
 import PropTypes from 'prop-types'
 import {connect} from "react-redux"
 import {getSettings} from "../../../actions/admin/settings"
+import Header from "./Header"
+import SpinnerLinear from "../../layout/SpinnerLinear"
 
-const Home = ({getSettings, settings: {settings}}) => {
+const Paralax = ({img}) => {
     useEffect(() => {
-        getSettings()
-        window.M.Sidenav.init(document.querySelectorAll('.sidenav'))
         window.M.Parallax.init(document.querySelectorAll('.parallax'))
     }, [])
-
     return (
+        <div className="parallax"><img
+            src={`/${img}`}
+            alt="Unsplashed background img 2"/>
+        </div>
+    )
+}
+
+const Home = ({settings: {settings, loading}}) => {
+    return loading ? <SpinnerLinear/> : (
         <>
-            <nav className="white" role="navigation">
-                <div className="nav-wrapper container">
-                    <a id="logo-container" href="#" className="brand-logo">
-                        {settings?.shotTitle || 'Магазин'}
-                    </a>
-                    <ul className="right hide-on-med-and-down">
-                        <li><a href="#">Корзина</a></li>
-                    </ul>
-
-                    <ul id="nav-mobile" className="sidenav">
-                        <li><a href="#">{settings?.shotTitle || 'Магазин'}</a></li>
-                        <li><a href="#">Корзина</a></li>
-                    </ul>
-                    <a href="#" data-target="nav-mobile" className="sidenav-trigger"><i
-                        className="material-icons">menu</i></a>
-                </div>
-            </nav>
-
             <div id="index-banner" className="parallax-container">
                 <div className="section no-pad-bot">
                     <div className="container">
@@ -41,20 +31,17 @@ const Home = ({getSettings, settings: {settings}}) => {
                             <h5 className="header col s12 light">{settings?.image1_text || 'Описание магазина'}</h5>
                         </div>
                         <div className="row center">
-                            <a href="#!"
+                            <Link to='/goods'
                                id="download-button"
                                className="btn-large waves-effect waves-light teal lighten-1">
                                 К покупкам
-                            </a>
+                            </Link>
                         </div>
                         <br/><br/>
 
                     </div>
                 </div>
-                <div className="parallax"><img
-                    src={`/${settings?.image1}`}
-                    alt="Unsplashed background img 1"/>
-                </div>
+                <Paralax img={settings?.image1}/>
             </div>
 
 
@@ -104,10 +91,7 @@ const Home = ({getSettings, settings: {settings}}) => {
                         </div>
                     </div>
                 </div>
-                <div className="parallax"><img
-                    src={`/${settings?.image2}`}
-                    alt="Unsplashed background img 2"/>
-                </div>
+                <Paralax img={settings?.image2}/>
             </div>
 
             <div className="container">
@@ -130,10 +114,7 @@ const Home = ({getSettings, settings: {settings}}) => {
                         </div>
                     </div>
                 </div>
-                <div className="parallax"><img
-                    src={`/${settings?.image2}`}
-                    alt="Unsplashed background img 3"/>
-                </div>
+                <Paralax img={settings?.image3}/>
             </div>
 
             <footer className="page-footer teal">
@@ -187,13 +168,11 @@ const Home = ({getSettings, settings: {settings}}) => {
 }
 
 Home.propTypes = {
-    getSettings: PropTypes.func.isRequired,
     settings: PropTypes.object.isRequired,
 }
 const mapStateToProps = state => ({
     settings: state.settings
 })
 export default connect(
-    mapStateToProps,
-    {getSettings}
+    mapStateToProps
 )(Home)

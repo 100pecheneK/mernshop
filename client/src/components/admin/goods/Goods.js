@@ -12,7 +12,6 @@ const Goods = ({
                    goods: {loading, goods: {docs, totalPages, page, limit}}
                }) => {
     useEffect(() => {
-        console.log('get')
         getGoods(match.params.page)
     }, [getGoods, match.params.page])
 

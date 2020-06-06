@@ -2,25 +2,24 @@ import {Link, Route, Switch} from "react-router-dom"
 import React from "react"
 import Home from "../client/home/Home"
 import './client.css'
+import Goods from "../client/goods/Goods"
+import Header from "../client/home/Header"
 
-const Home2 = () => (
-    <>
-        <ul>
-            <li>
-                <Link to='/'>Страница 1</Link>
-            </li>
-            <li>
-                <Link to='/admin'>admin</Link>
-            </li>
-        </ul>
+const Cart = () => {
+    return (
+        <h1>Cart</h1>
+    )
+}
 
-        <h1>Страница 2</h1>
-    </>
-)
 const ClientRoutes = () => (
-    <Switch>
-        <Route exact path='/' component={Home}/>
-        <Route exact path='/home2' component={Home2}/>
-    </Switch>
+    <>
+        <Header/>
+        <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route exact path='/cart' component={Cart}/>
+            <Route exact path='/goods' component={Goods}/>
+            <Route path='/goods/:page' component={Goods}/>
+        </Switch>
+    </>
 )
 export default ClientRoutes

@@ -50,7 +50,7 @@ export default (state = initialState, action) => {
         case CREATE_SETTINGS_FAIL:
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 errors: payload
             }
         default:

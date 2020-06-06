@@ -121,3 +121,11 @@ nav {
     outline: 5px dashed #92b0b3;
     outline-offset: -5px;
 }
+/**/
+.row-center {
+    display: flex;
+    justify-content: center;
+}
+/**/
+
+

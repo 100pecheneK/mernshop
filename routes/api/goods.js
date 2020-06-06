@@ -156,7 +156,7 @@ router.delete(
 /**
  *  @route GET /api/admin/goods
  *  @desc Просмотр товаров
- *  @access auth
+ *  @access public
  */
 router.get(
     '/',
