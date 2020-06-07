@@ -15,8 +15,9 @@ const Pagination = ({path, totalPages, currentPage}) => {
     const gegPageNext = () => {
         return currentPage + 1 > totalPages ? totalPages : currentPage + 1
     }
-    return (
+    return totalPages !== 1 &&
         <ul className="pagination">
+
             <li className={currentPage === 1 ? "disabled" : "waves-effect"}>
                 <Link to={`${path}/${getPagePrev()}`}><i className="material-icons">chevron_left</i></Link>
             </li>
@@ -30,7 +31,6 @@ const Pagination = ({path, totalPages, currentPage}) => {
                     className="material-icons">chevron_right</i></Link>
             </li>
         </ul>
-    )
 }
 
 Pagination.propTypes = {

@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
-import alert from "../../../utils/alert"
 import SpinnerLinear from "../../layout/SpinnerLinear"
 import Header from "../Header/Header"
 import Form from "../../layout/Form"
 import {InputField} from "../../layout/Fields"
 import {connect} from "react-redux"
-import {createCategory, editCategory, getCategory} from "../../../actions/admin/categories"
+import {editCategory, getCategory} from "../../../actions/admin/categories"
 
 
 const CategoryCreate = ({editCategory, getCategory, category, loading, match}) => {
@@ -21,7 +20,7 @@ const CategoryCreate = ({editCategory, getCategory, category, loading, match}) =
     useEffect(() => {
         window.M.updateTextFields()
         getCategory(match.params.id)
-    }, [])
+    }, [getCategory, match.params.id])
 
     const onSubmit = async e => {
         editCategory({name}, match.params.id)

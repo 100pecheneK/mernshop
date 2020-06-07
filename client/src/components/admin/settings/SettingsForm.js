@@ -5,9 +5,8 @@ import {InputField} from "../../layout/Fields"
 import ProgressBar from "../../layout/ProgressBar"
 import Form from "../../layout/Form"
 import Header from "../Header/Header"
-import {checkFileSize, checkMimeType, maxSelectFile} from "../../../utils/upload"
+import {checkMimeType, maxSelectFile} from "../../../utils/upload"
 import {resetUpload} from "../../../actions/admin/settings"
-import SpinnerLinear from "../../layout/SpinnerLinear"
 
 const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) => {
     const [formData, setFormData] = useState({
@@ -16,6 +15,7 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
         image1_text: '',
         image2_text: '',
         contactUs: '',
+        contactUs_text: '',
         image3_text: '',
         about: '',
         youtube: '',
@@ -24,10 +24,13 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
         instagram: '',
         vkontakte: '',
         advantage1: '',
+        advantage1_text: '',
         icon1: '',
         advantage2: '',
+        advantage2_text: '',
         icon2: '',
         advantage3: '',
+        advantage3_text: '',
         icon3: '',
     })
     const [image1, setImage1] = useState('')
@@ -45,6 +48,7 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
         image1_text,
         image2_text,
         contactUs,
+        contactUs_text,
         image3_text,
         about,
         youtube,
@@ -53,10 +57,13 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
         instagram,
         vkontakte,
         advantage1,
+        advantage1_text,
         icon1,
         advantage2,
+        advantage2_text,
         icon2,
         advantage3,
+        advantage3_text,
         icon3,
     } = formData
     useEffect(() => {
@@ -74,6 +81,8 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
                 case 'image3':
                     setImage3(e.target.files)
                     break
+                default:
+                    break
             }
             resetUpload(0)
         }
@@ -82,33 +91,13 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
 
     const onsubmit = async e => {
         onSubmit({
-            shotTitle,
-            title,
-            image1_text,
-            image2_text,
-            contactUs,
-            image3_text,
-            about,
-            youtube,
-            twitter,
-            facebook,
-            instagram,
-            vkontakte,
-            advantage1,
-            icon1,
-            advantage2,
-            icon2,
-            advantage3,
-            icon3,
+            ...formData,
             image1,
             image2,
             image3,
         })
     }
 
-    useEffect(() => {
-        window.M.updateTextFields()
-    }, [])
     useEffect(() => {
         if (image1Preview || image2Preview || image3Preview) {
             window.M.Carousel.init(document.querySelectorAll('.carousel'), {noWrap: true})
@@ -123,6 +112,7 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
                 image1_text: initialValues?.image1_text || '',
                 image2_text: initialValues?.image2_text || '',
                 contactUs: initialValues?.contactUs || '',
+                contactUs_text: initialValues?.contactUs_text || '',
                 image3_text: initialValues?.image3_text || '',
                 about: initialValues?.about || '',
                 youtube: initialValues?.links?.youtube || '',
@@ -131,10 +121,13 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
                 instagram: initialValues?.links?.instagram || '',
                 vkontakte: initialValues?.links?.vkontakte || '',
                 advantage1: initialValues?.advantages?.advantage1 || '',
+                advantage1_text: initialValues?.advantages?.advantage1_text || '',
                 icon1: initialValues?.advantages?.icon1 || '',
                 advantage2: initialValues?.advantages?.advantage2 || '',
+                advantage2_text: initialValues?.advantages?.advantage2_text || '',
                 icon2: initialValues?.advantages?.icon2 || '',
                 advantage3: initialValues?.advantages?.advantage3 || '',
+                advantage3_text: initialValues?.advantages?.advantage3_text || '',
                 icon3: initialValues?.advantages?.icon3 || '',
             }))
             setImage1Preview(initialValues?.image1 || '')
@@ -150,27 +143,30 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
                     <InputField
                         value={shotTitle}
                         name='shotTitle'
-                        placeholder='shotTitle'
+                        placeholder='Короткое название'
                         onChange={onChange}
+                        req={false}
                         s={12}/>
                     <InputField
                         value={title}
                         name='title'
-                        placeholder='title'
+                        placeholder='Длинное название'
                         onChange={onChange}
+                        req={false}
                         s={12}/>
                     <InputField
                         value={image1_text}
                         name='image1_text'
-                        placeholder='image1_text'
+                        placeholder='Текст на первом изображении'
                         onChange={onChange}
+                        req={false}
                         s={12}/>
                     {
                         image1Preview &&
                         <div className="row">
                             <div className="s12">
                                 <div className="carousel">
-                                    <a className="carousel-item">
+                                    <a href="#!" className="carousel-item">
                                         <img src={`/${image1Preview}`} alt="settings"/>
                                     </a>
                                 </div>
@@ -196,17 +192,84 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
                         />
                     </div>
                     <InputField
+                        value={advantage1}
+                        name='advantage1'
+                        placeholder='Преимущество 1'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={advantage1_text}
+                        textarea={true}
+                        name='advantage1_text'
+                        placeholder='Описание преимущества 1'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={icon1}
+                        name='icon1'
+                        placeholder='Иконка 1'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={advantage2}
+                        name='advantage2'
+                        placeholder='Преимущество 2'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={advantage2_text}
+                        textarea={true}
+                        name='advantage2_text'
+                        placeholder='Описание преимущества 2'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={icon2}
+                        name='icon2'
+                        placeholder='Иконка 2'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={advantage3}
+                        name='advantage3'
+                        placeholder='Преимущество 3'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={advantage3_text}
+                        textarea={true}
+                        name='advantage3_text'
+                        placeholder='Описание преимущества 3'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={icon3}
+                        name='icon3'
+                        placeholder='Иконка 3'
+                        onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
                         value={image2_text}
                         name='image2_text'
-                        placeholder='image2_text'
+                        placeholder='Текст на втором изображении'
                         onChange={onChange}
+                        req={false}
                         s={12}/>
                     {
                         image2Preview &&
                         <div className="row">
                             <div className="s12">
                                 <div className="carousel">
-                                    <a className="carousel-item">
+                                    <a href="#!" className="carousel-item">
                                         <img src={`/${image2Preview}`} alt="settings"/>
                                     </a>
                                 </div>
@@ -234,21 +297,30 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
                     <InputField
                         value={contactUs}
                         name='contactUs'
-                        placeholder='contactUs'
+                        placeholder='Дополнительный текст заголовок'
                         onChange={onChange}
+                        req={false}
+                        s={12}/>
+                    <InputField
+                        value={contactUs_text}
+                        name='contactUs_text'
+                        placeholder='Дополнительный текст'
+                        onChange={onChange}
+                        req={false}
                         s={12}/>
                     <InputField
                         value={image3_text}
                         name='image3_text'
-                        placeholder='image3_text'
+                        placeholder='Текст на третьем изображении'
                         onChange={onChange}
+                        req={false}
                         s={12}/>
                     {
                         image3Preview &&
                         <div className="row">
                             <div className="s12">
                                 <div className="carousel">
-                                    <a className="carousel-item">
+                                    <a href="#!" className="carousel-item">
                                         <img src={`/${image3Preview}`} alt="settings"/>
                                     </a>
                                 </div>
@@ -276,80 +348,46 @@ const SettingsForm = ({initialValues, loading, onSubmit, resetUpload, upload}) =
                     <InputField
                         value={about}
                         name='about'
-                        placeholder='about'
+                        placeholder='О компании'
                         onChange={onChange}
+                        req={false}
                         s={12}/>
                     <InputField
                         value={youtube}
                         name='youtube'
-                        placeholder='youtube'
+                        placeholder='YouTube'
                         onChange={onChange}
                         req={false}
                         s={12}/>
                     <InputField
                         value={twitter}
                         name='twitter'
-                        placeholder='twitter'
+                        placeholder='Twitter'
                         onChange={onChange}
                         req={false}
                         s={12}/>
                     <InputField
                         value={facebook}
                         name='facebook'
-                        placeholder='facebook'
+                        placeholder='Facebook'
                         onChange={onChange}
                         req={false}
                         s={12}/>
                     <InputField
                         value={instagram}
                         name='instagram'
-                        placeholder='instagram'
+                        placeholder='Instagram'
                         onChange={onChange}
                         req={false}
                         s={12}/>
                     <InputField
                         value={vkontakte}
                         name='vkontakte'
-                        placeholder='vkontakte'
+                        placeholder='VK'
                         onChange={onChange}
                         req={false}
                         s={12}/>
-                    <InputField
-                        value={advantage1}
-                        name='advantage1'
-                        placeholder='advantage1'
-                        onChange={onChange}
-                        s={12}/>
-                    <InputField
-                        value={icon1}
-                        name='icon1'
-                        placeholder='icon1'
-                        onChange={onChange}
-                        s={12}/>
-                    <InputField
-                        value={advantage2}
-                        name='advantage2'
-                        placeholder='advantage2'
-                        onChange={onChange}
-                        s={12}/>
-                    <InputField
-                        value={icon2}
-                        name='icon2'
-                        placeholder='icon2'
-                        onChange={onChange}
-                        s={12}/>
-                    <InputField
-                        value={advantage3}
-                        name='advantage3'
-                        placeholder='advantage3'
-                        onChange={onChange}
-                        s={12}/>
-                    <InputField
-                        value={icon3}
-                        name='icon3'
-                        placeholder='icon3'
-                        onChange={onChange}
-                        s={12}/>
+
                     <ProgressBar progress={Math.round(upload, 2)}/>
                     <input type="submit" value="Сохранить" className="btn btn-primary"/>
                 </Form>

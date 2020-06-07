@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 import {getSettings} from "../../../actions/admin/settings"
 import SpinnerLinear from "../../layout/SpinnerLinear"
 
-const Header = ({getSettings, settings: {settings, loading}}) => {
+const Header = ({cartTotal, getSettings, settings: {settings, loading}}) => {
     useEffect(() => {
         getSettings()
     }, [getSettings])
@@ -24,15 +24,17 @@ const Header = ({getSettings, settings: {settings, loading}}) => {
                     {settings?.shotTitle || 'Магазин'}
                 </Link>
                 <ul className="right hide-on-med-and-down">
-                    <li><Link to='/' onClick={onNavClick}>Корзина</Link></li>
+                    <li><Link to='/cart' onClick={onNavClick}><i className="material-icons left">shopping_cart</i> {cartTotal !== 0 &&
+                    <b>{cartTotal} ₽</b>}</Link></li>
                 </ul>
                 <ul id="nav-mobile" className="sidenav">
                     <li><Link to='/' onClick={onNavClick}>{settings?.shotTitle || 'Магазин'}</Link>
                     </li>
                     <li><Link to='/goods' onClick={onNavClick}>Товары</Link></li>
-                    <li><Link to='/cart' onClick={onNavClick}>Корзина</Link></li>
+                    <li><Link to='/cart' onClick={onNavClick}><i className="material-icons left">shopping_cart</i> {cartTotal !== 0 &&
+                    <b>{cartTotal} ₽</b>}</Link></li>
                 </ul>
-                <a href="#" data-target="nav-mobile" className="sidenav-trigger"><i
+                <a href="#!" data-target="nav-mobile" className="sidenav-trigger"><i
                     className="material-icons">menu</i></a>
             </div>
         </nav>
@@ -42,9 +44,11 @@ const Header = ({getSettings, settings: {settings, loading}}) => {
 Header.propTypes = {
     settings: PropTypes.object.isRequired,
     getSettings: PropTypes.func.isRequired,
+    cartTotal: PropTypes.number.isRequired,
 }
 const mapStateToProps = state => ({
-    settings: state.settings
+    settings: state.settings,
+    cartTotal: state.cart.total
 })
 export default connect(
     mapStateToProps,

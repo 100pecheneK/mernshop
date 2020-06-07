@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {Link} from "react-router-dom"
 
 const Header = ({title, link = '', linkName = ''}) => {
@@ -17,7 +16,5 @@ const Header = ({title, link = '', linkName = ''}) => {
         </nav>
     )
 }
-
-Header.propTypes = {}
 
 export default Header

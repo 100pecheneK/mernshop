@@ -1,15 +1,12 @@
-import {Link, Route, Switch} from "react-router-dom"
+import {Route, Switch} from "react-router-dom"
 import React from "react"
 import Home from "../client/home/Home"
 import './client.css'
 import Goods from "../client/goods/Goods"
 import Header from "../client/home/Header"
+import Cart from "../client/cart/Cart"
 
-const Cart = () => {
-    return (
-        <h1>Cart</h1>
-    )
-}
+
 
 const ClientRoutes = () => (
     <>

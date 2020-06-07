@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {Link, Redirect} from "react-router-dom"
 import alert from '../../../utils/alert'
 import PropTypes from 'prop-types'
 import {createUser} from "../../../actions/admin/users"

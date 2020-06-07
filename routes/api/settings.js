@@ -32,6 +32,7 @@ const getSettingsFields = req => {
         image1_text,
         image2_text,
         contactUs,
+        contactUs_text,
         image3_text,
         about,
         youtube,
@@ -40,10 +41,13 @@ const getSettingsFields = req => {
         instagram,
         vkontakte,
         advantage1,
+        advantage1_text,
         icon1,
         advantage2,
+        advantage2_text,
         icon2,
         advantage3,
+        advantage3_text,
         icon3,
     } = req.body
     const image1 = req.files['image1']
@@ -59,16 +63,20 @@ const getSettingsFields = req => {
 
     settingsFields.advantages = {}
     if (advantage1) settingsFields.advantages.advantage1 = advantage1
+    if (advantage1_text) settingsFields.advantages.advantage1_text = advantage1_text
     if (icon1) settingsFields.advantages.icon1 = icon1
     if (advantage2) settingsFields.advantages.advantage2 = advantage2
+    if (advantage2_text) settingsFields.advantages.advantage2_text = advantage2_text
     if (icon2) settingsFields.advantages.icon2 = icon2
     if (advantage3) settingsFields.advantages.advantage3 = advantage3
+    if (advantage3_text) settingsFields.advantages.advantage3_text = advantage3_text
     if (icon3) settingsFields.advantages.icon3 = icon3
 
     if (image2) settingsFields.image2 = image2[0].path
     if (image2_text) settingsFields.image2_text = image2_text
 
     if (contactUs) settingsFields.contactUs = contactUs
+    if (contactUs_text) settingsFields.contactUs_text = contactUs_text
 
     if (image3) settingsFields.image3 = image3[0].path
     if (image3_text) settingsFields.image3_text = image3_text
@@ -133,14 +141,20 @@ router.post(
             return res.status(400).json({errors: errors.array()})
         }
         try {
-            let settings = await Settings.findOne({$query: {}, $orderby: {_id: -1}})
+            let settings = await Settings.findOne({$query: {}})
             if (settings) {
                 //    update
                 const settingsFields = getSettingsFields(req)
-                await Settings.findByIdAndUpdate(
+                if (!settingsFields.image1)
+                    settingsFields.image1 = settings.image1
+                if (!settingsFields.image2)
+                    settingsFields.image2 = settings.image2
+                if (!settingsFields.image3)
+                    settingsFields.image3 = settings.image3
+                await Settings.findOneAndReplace(
                     {_id: settings.id},
-                    {$set: settingsFields})
-                settings = await Settings.findOne({$query: {}, $orderby: {_id: -1}})
+                    settingsFields)
+                settings = await Settings.findOne({$query: {}})
             } else {
                 //    create
                 const settingsFields = getSettingsFields(req)

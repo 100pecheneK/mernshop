@@ -1,11 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import PropTypes from 'prop-types'
 import SpinnerLinear from "../../layout/SpinnerLinear"
 import Pagination from "../../layout/Pagination"
-import {Link} from "react-router-dom"
 import {connect} from "react-redux"
 import {deleteUser, getUsers} from "../../../actions/admin/users"
-import Spinner from "../../layout/Spinner"
 import Header from "../Header/Header"
 
 const Accounts = ({
@@ -44,7 +42,7 @@ const Accounts = ({
                                     <td>{doc.name}</td>
                                     <td>{doc.email}</td>
                                     <td>{doc.isAdmin ? 'Админ' : 'Сотрудник'}</td>
-                                    <td><a className="waves-effect waves-light btn red"
+                                    <td><a href="#!" className="waves-effect waves-light btn red"
                                            onClick={() => deleteUser(doc._id)}
                                     >Удалить</a>
                                     </td>

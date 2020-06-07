@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from "react-redux"
-import {getSettings} from "../../../actions/admin/settings"
 import {createSettings} from "../../../actions/admin/settings"
 import SettingsForm from "./SettingsForm"
 

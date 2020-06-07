@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {Link, Redirect} from "react-router-dom"
-import alert from '../../../utils/alert'
 import PropTypes from 'prop-types'
-import {createUser} from "../../../actions/admin/users"
 import Header from "../Header/Header"
 import Form from "../../layout/Form"
 import {InputField} from "../../layout/Fields"
@@ -11,7 +8,6 @@ import SpinnerLinear from "../../layout/SpinnerLinear"
 import {createGood, resetUpload} from "../../../actions/admin/goods"
 import ProgressBar from "../../layout/ProgressBar"
 import {getAllCategories} from "../../../actions/admin/categories"
-import Spinner from "../../layout/Spinner"
 import {checkFileSize, checkMimeType, maxSelectFile} from "../../../utils/upload"
 
 const GoodCreate = ({createGood, loading, upload, resetUpload, getAllCategories, categories: {allCategories: categories, loading: categoriesLoading}}) => {
@@ -43,9 +39,8 @@ const GoodCreate = ({createGood, loading, upload, resetUpload, getAllCategories,
         }
     }
     useEffect(() => {
-        window.M.updateTextFields()
         getAllCategories()
-    }, [])
+    }, [getAllCategories])
 
     useEffect(() => {
         if (!categoriesLoading) {

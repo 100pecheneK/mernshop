@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const SpinnerLinear = props => {
+const SpinnerLinear = () => {
     return (
         <div className="progress">
             <div className="indeterminate"/>
@@ -9,6 +8,5 @@ const SpinnerLinear = props => {
     )
 }
 
-SpinnerLinear.propTypes = {}
 
 export default SpinnerLinear

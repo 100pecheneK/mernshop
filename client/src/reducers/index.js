@@ -4,6 +4,7 @@ import users from "./users"
 import goods from "./goods"
 import categories from "./categories"
 import settings from "./settings"
+import cart from "./cart"
 
 export default combineReducers({
     auth,
@@ -11,4 +12,5 @@ export default combineReducers({
     goods,
     categories,
     settings,
+    cart,
 })

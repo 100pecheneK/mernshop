@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import './App.css'
 import 'materialize-css'
 // import 'semantic-ui-css/semantic.min.css'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {Router, Route, Switch} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import ClientRoutes from "./components/routing/ClientRoutes"
 import AdminRoutes from "./components/routing/AdminRoutes"

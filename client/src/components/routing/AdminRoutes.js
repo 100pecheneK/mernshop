@@ -1,7 +1,6 @@
-import {Route, Switch} from "react-router-dom"
-import React, {useEffect} from "react"
+import {Switch} from "react-router-dom"
+import React from "react"
 import Sidebar from "../admin/Sidebar/Sidebar"
-import SpinnerLinear from "../layout/SpinnerLinear"
 import setAuthToken from "../../utils/setAuthToken"
 import ErrorBoundary from "../layout/ErrorBoundary"
 import PrivateRoute from "./PrivateRoute"
@@ -16,10 +15,6 @@ import GoodsEdit from '../admin/goods/GoodsEdit'
 import Categories from '../admin/categories/Categories'
 import CategoryCreate from '../admin/categories/CategoryCreate'
 import CategoryEdit from '../admin/categories/CategoryEdit'
-import PropTypes from "prop-types"
-import {connect} from "react-redux"
-import {logout} from "../../actions/admin/auth"
-import SettingsCreate from "../admin/settings/SettingsCreate"
 import Settings from "../admin/settings/Settings"
 
 

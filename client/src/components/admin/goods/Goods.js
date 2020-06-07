@@ -49,7 +49,7 @@ const Goods = ({
                                         to={`/admin/goods/${doc._id}`}
                                         className="waves-effect waves-light btn blue"
                                     ><i className="material-icons prefix">edit</i></Link></td>
-                                    <td><a className="waves-effect waves-light btn red"
+                                    <td><a href="#!" className="waves-effect waves-light btn red"
                                            onClick={() => deleteGood(doc._id)}
                                     ><i className="material-icons prefix">delete</i></a>
                                     </td>

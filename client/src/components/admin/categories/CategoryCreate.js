@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
-import alert from "../../../utils/alert"
 import SpinnerLinear from "../../layout/SpinnerLinear"
 import Header from "../Header/Header"
 import Form from "../../layout/Form"

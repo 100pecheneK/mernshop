@@ -1,15 +1,12 @@
 import {
     GET_SETTINGS,
     CREATE_SETTINGS,
-    UPDATE_SETTINGS,
-    GET_CATEGORIES_FAIL,
-    CATEGORY_LOADING,
-    CREATE_CATEGORY_SUCCESS,
     UPLOADING_SETTINGS,
-    EDIT_GOOD_SUCCESS, CREATE_SETTINGS_FAIL, RESET_UPLOAD_SETTINGS, GET_SETTINGS_FAIL,
+    CREATE_SETTINGS_FAIL,
+    RESET_UPLOAD_SETTINGS,
+    GET_SETTINGS_FAIL,
 } from './types'
 import showErrors from "../../utils/showErrors"
-import {makeConfig} from "../axios.headers"
 import axios from "axios"
 import alert from "../../utils/alert"
 
@@ -19,6 +16,7 @@ const createFormData = ({
                             image1_text,
                             image2_text,
                             contactUs,
+                            contactUs_text,
                             image3_text,
                             about,
                             youtube,
@@ -27,21 +25,49 @@ const createFormData = ({
                             instagram,
                             vkontakte,
                             advantage1,
+                            advantage1_text,
                             icon1,
                             advantage2,
+                            advantage2_text,
                             icon2,
                             advantage3,
+                            advantage3_text,
                             icon3,
                             image1,
                             image2,
                             image3,
                         }) => {
+    console.log({
+        shotTitle,
+        title,
+        image1_text,
+        image2_text,
+        contactUs,
+        contactUs_text,
+        image3_text,
+        about,
+        youtube,
+        twitter,
+        facebook,
+        instagram,
+        vkontakte,
+        advantage1,
+        icon1,
+        advantage2,
+        icon2,
+        advantage3,
+        icon3,
+        image1,
+        image2,
+        image3,
+    })
     const formData = new FormData()
     if (shotTitle) formData.append('shotTitle', shotTitle)
     if (title) formData.append('title', title)
     if (image1_text) formData.append('image1_text', image1_text)
     if (image2_text) formData.append('image2_text', image2_text)
     if (contactUs) formData.append('contactUs', contactUs)
+    if (contactUs_text) formData.append('contactUs_text', contactUs_text)
     if (image3_text) formData.append('image3_text', image3_text)
     if (about) formData.append('about', about)
     if (youtube) formData.append('youtube', youtube)
@@ -50,10 +76,13 @@ const createFormData = ({
     if (instagram) formData.append('instagram', instagram)
     if (vkontakte) formData.append('vkontakte', vkontakte)
     if (advantage1) formData.append('advantage1', advantage1)
+    if (advantage1_text) formData.append('advantage1_text', advantage1_text)
     if (icon1) formData.append('icon1', icon1)
     if (advantage2) formData.append('advantage2', advantage2)
+    if (advantage2_text) formData.append('advantage2_text', advantage2_text)
     if (icon2) formData.append('icon2', icon2)
     if (advantage3) formData.append('advantage3', advantage3)
+    if (advantage3_text) formData.append('advantage3_text', advantage3_text)
     if (icon3) formData.append('icon3', icon3)
     if (image1) formData.append('image1', image1[0])
     if (image2) formData.append('image2', image2[0])

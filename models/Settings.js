@@ -20,10 +20,16 @@ const SettingsSchema = new Schema({
         icon1: {
             type: String
         },
+        advantage1_text:{
+            type: String
+        },
         advantage2: {
             type: String
         },
         icon2: {
+            type: String
+        },
+        advantage2_text:{
             type: String
         },
         advantage3: {
@@ -31,7 +37,10 @@ const SettingsSchema = new Schema({
         },
         icon3: {
             type: String
-        }
+        },
+        advantage3_text:{
+            type: String
+        },
     },
     image2: {
         type: String,
@@ -40,6 +49,9 @@ const SettingsSchema = new Schema({
         type: String,
     },
     contactUs: {
+        type: String,
+    },
+    contactUs_text: {
         type: String,
     },
     image3: {

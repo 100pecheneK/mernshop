@@ -1,12 +1,10 @@
-import {makeBody, makeConfig} from "../axios.headers"
+import {makeConfig} from "../axios.headers"
 import axios from "axios"
 import {
     CREATE_USER_SUCCESS,
     GET_USERS,
-    GET_USER,
     DELETE_USER,
     GET_USERS_FAIL,
-    GET_USER_FAIL,
     DELETE_USER_FAIL, USER_LOADING, CREATE_USER_FAIL,
 } from "./types"
 import alert from "../../utils/alert"

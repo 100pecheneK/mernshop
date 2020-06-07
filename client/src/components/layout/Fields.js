@@ -1,7 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, {useEffect} from 'react'
 
 export const InputField = ({req, s = 12, onDragEnter, onDragLeave, onDrop, classes = '', type = 'text', placeholder, textarea = false, icon, ...rest}) => {
+    useEffect(() => {
+        window.M.updateTextFields()
+    }, [])
     return (
         <div className={`input-field col s${s} ${classes}`}>
             {icon && <i className="material-icons prefix">{icon}</i>}

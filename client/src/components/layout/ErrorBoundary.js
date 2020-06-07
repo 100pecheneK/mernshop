@@ -17,7 +17,7 @@ export default class ErrorBoundary extends Component {
                     <div className="col s12 m6">
                         <div className="card blue-grey darken-1">
                             <div className="card-content white-text">
-                                <span className="card-title">Что-то пошло не так 😞</span>
+                                <span className="card-title">Что-то пошло не так :(</span>
                                 <p>Наши сотрудники уже оповещены о том, что произошла ошибка и
                                     постараются как можно скорей её устранить.</p>
                             </div>

@@ -44,7 +44,7 @@ const Categories = ({
                                         to={`/admin/categories/${doc._id}`}
                                         className="waves-effect waves-light btn blue"
                                     ><i className="material-icons prefix">edit</i></Link></td>
-                                    <td><a className="waves-effect waves-light btn red"
+                                    <td><a href="#!"className="waves-effect waves-light btn red"
                                            onClick={() => deleteCategory(doc._id)}
                                     ><i className="material-icons prefix">delete</i></a>
                                     </td>

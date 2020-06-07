@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {Link, Redirect} from "react-router-dom"
-import alert from '../../../utils/alert'
 import PropTypes from 'prop-types'
-import {createUser} from "../../../actions/admin/users"
 import Header from "../Header/Header"
 import Form from "../../layout/Form"
 import {InputField} from "../../layout/Fields"
 import SpinnerLinear from "../../layout/SpinnerLinear"
-import {createGood, editGood, getGood, resetUpload} from "../../../actions/admin/goods"
+import {editGood, getGood, resetUpload} from "../../../actions/admin/goods"
 import ProgressBar from "../../layout/ProgressBar"
 import {getAllCategories} from "../../../actions/admin/categories"
 import Spinner from "../../layout/Spinner"
@@ -44,7 +41,6 @@ const GoodEdit = ({editGood, good, loading, upload, match, getGood, resetUpload,
         }
     }
     useEffect(() => {
-        window.M.updateTextFields()
         getAllCategories()
     }, [getAllCategories])
 
@@ -67,7 +63,7 @@ const GoodEdit = ({editGood, good, loading, upload, match, getGood, resetUpload,
             }
         }
 
-    }, [categoriesLoading, loading])
+    }, [categoriesLoading, loading, good])
     useEffect(() => {
         if (!loading && !categoriesLoading) {
             setFormData(prev => ({
@@ -161,7 +157,7 @@ const GoodEdit = ({editGood, good, loading, upload, match, getGood, resetUpload,
                         <div className="s12">
                             <div className="carousel">
                                 {imagesPreview ? imagesPreview.map((img, i) => (
-                                    <a className="carousel-item" key={i}><img
+                                    <a href="#!" className="carousel-item" key={i}><img
                                         src={`/${img}`} alt="good"/></a>
                                 )) : <Spinner/>
                                 }

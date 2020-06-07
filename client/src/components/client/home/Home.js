@@ -2,8 +2,6 @@ import {Link} from "react-router-dom"
 import React, {useEffect} from "react"
 import PropTypes from 'prop-types'
 import {connect} from "react-redux"
-import {getSettings} from "../../../actions/admin/settings"
-import Header from "./Header"
 import SpinnerLinear from "../../layout/SpinnerLinear"
 
 const Paralax = ({img}) => {
@@ -21,6 +19,7 @@ const Paralax = ({img}) => {
 const Home = ({settings: {settings, loading}}) => {
     return loading ? <SpinnerLinear/> : (
         <>
+            {settings?.image1 &&
             <div id="index-banner" className="parallax-container">
                 <div className="section no-pad-bot">
                     <div className="container">
@@ -32,9 +31,9 @@ const Home = ({settings: {settings, loading}}) => {
                         </div>
                         <div className="row center">
                             <Link to='/goods'
-                               id="download-button"
-                               className="btn-large waves-effect waves-light teal lighten-1">
-                                К покупкам
+                                  id="download-button"
+                                  className="btn-large waves-effect waves-light  pink lighten-2">
+                                К покупкам!
                             </Link>
                         </div>
                         <br/><br/>
@@ -43,8 +42,9 @@ const Home = ({settings: {settings, loading}}) => {
                 </div>
                 <Paralax img={settings?.image1}/>
             </div>
+            }
 
-
+            {settings?.advantages &&
             <div className="container">
                 <div className="section">
                     <div className="row">
@@ -54,7 +54,7 @@ const Home = ({settings: {settings, loading}}) => {
                                     <i className="material-icons">{settings?.advantages?.icon1 || 'flash_on'}</i>
                                 </h2>
                                 <h5 className="center">{settings?.advantages?.advantage1 || 'Быстро'}</h5>
-                                <p className="light">{settings?.advantages?.advantage1_text}</p>
+                                <p className="light flow-text">{settings?.advantages?.advantage1_text}</p>
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@ const Home = ({settings: {settings, loading}}) => {
                                     <i className="material-icons">{settings?.advantages?.icon2 || 'flash_on'}</i>
                                 </h2>
                                 <h5 className="center">{settings?.advantages?.advantage2 || 'Быстро'}</h5>
-                                <p className="light">{settings?.advantages?.advantage2_text}</p>
+                                <p className="light flow-text">{settings?.advantages?.advantage2_text}</p>
                             </div>
                         </div>
 
@@ -74,15 +74,15 @@ const Home = ({settings: {settings, loading}}) => {
                                     <i className="material-icons">{settings?.advantages?.icon3 || 'flash_on'}</i>
                                 </h2>
                                 <h5 className="center">{settings?.advantages?.advantage3 || 'Быстро'}</h5>
-                                <p className="light">{settings?.advantages?.advantage3_text}</p>
+                                <p className="light flow-text">{settings?.advantages?.advantage3_text}</p>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-
-
+            }
+            {settings?.image2 &&
             <div className="parallax-container valign-wrapper">
                 <div className="section no-pad-bot">
                     <div className="container">
@@ -93,19 +93,21 @@ const Home = ({settings: {settings, loading}}) => {
                 </div>
                 <Paralax img={settings?.image2}/>
             </div>
-
+            }
+            {settings?.contactUs &&
             <div className="container">
                 <div className="section">
                     <div className="row">
                         <div className="col s12 center">
                             <h3><i className="mdi-content-send brown-text"/></h3>
-                            <h4>Напишите нам</h4>
-                            <p className="left-align light flow-text">{settings?.contactUs}</p>
+                            <h4>{settings?.contactUs}</h4>
+                            <p className="left-align light flow-text">{settings?.contactUs_text}</p>
                         </div>
                     </div>
                 </div>
             </div>
-
+            }
+            {settings?.image3 &&
             <div className="parallax-container valign-wrapper">
                 <div className="section no-pad-bot">
                     <div className="container">
@@ -116,14 +118,16 @@ const Home = ({settings: {settings, loading}}) => {
                 </div>
                 <Paralax img={settings?.image3}/>
             </div>
+            }
 
             <footer className="page-footer teal">
                 <div className="container">
                     <div className="row">
                         <div className="col l6 s12">
                             <h5 className="white-text">О компании</h5>
-                            <p className="grey-text text-lighten-4">{settings?.about}</p>
+                            <p className="grey-text text-lighten-4">{settings?.about || 'Мы отличная компания'}</p>
                         </div>
+                        {settings?.links &&
                         <div className="col l3 s12">
                             <h5 className="white-text">Соц сети</h5>
                             <ul>
@@ -154,6 +158,7 @@ const Home = ({settings: {settings, loading}}) => {
 
                             </ul>
                         </div>
+                        }
                     </div>
                 </div>
                 <div className="footer-copyright">

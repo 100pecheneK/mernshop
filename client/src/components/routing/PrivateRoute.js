@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from "react-redux"
 import {Redirect, Route} from "react-router-dom"
-import Spinner from "../layout/Spinner"
 import SpinnerLinear from "../layout/SpinnerLinear"
-import ErrorBoundary from "../layout/ErrorBoundary"
 
 const PrivateRoute = ({
                           component: Component,

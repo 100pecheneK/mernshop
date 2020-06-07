@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const Spinner = props => {
+const Spinner = () => {
     return (
         <div className="preloader-wrapper big active">
             <div className="spinner-layer spinner-blue-only">
@@ -19,6 +18,5 @@ const Spinner = props => {
     )
 }
 
-Spinner.propTypes = {}
 
 export default Spinner
