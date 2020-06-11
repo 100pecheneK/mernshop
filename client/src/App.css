@@ -167,10 +167,14 @@ nav {
 
 
 /**/
+.parallax {
+    background-color: black;
+}
 .parallax img {
     width: 100% !important;
     height: auto !important;
     object-fit: cover !important;
+    opacity: 0.8 !important;
 }
 
 .card .card-image .card-title {
