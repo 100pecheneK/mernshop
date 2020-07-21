@@ -31,39 +31,37 @@ const Goods = ({
     <>
       <div className="container">
         <div className="row">
-          <div className="col">
-            <div className="card-columns">
-              {docs.map((doc, i) => {
-                return (
-                  <div className="card" key={doc._id}>
-                    <div className="card-image">
-                      <LazyLoad
-                        key={i}
-                        debounce={false}
-                        throttle={250}
-                        offsetVertical={300}
-                      >
-                        <ImageLoader alt="good" src={`/${doc.images[0]}`} />
-                      </LazyLoad>
-                      <span className="card-title">{doc.name}</span>
-                      <a
-                        href="#!"
-                        onClick={() => onGoodAddToCartClick(doc)}
-                        className="btn-floating halfway-fab waves-effect waves-light red"
-                      >
-                        <i className="material-icons">add_shopping_cart</i>
-                      </a>
-                    </div>
-                    <div className="card-content">
-                      <b>{doc.category.name}</b>
-                      <p>Цена: {doc.price} ₽</p>
-                      <p>{doc.description}</p>
-                    </div>
+          {docs.map((doc, i) => {
+            return (
+              <div className="col s6 m4" key={doc._id}>
+                <div className="card">
+                  <div className="card-image">
+                    <LazyLoad
+                      key={i}
+                      debounce={false}
+                      throttle={250}
+                      offsetVertical={500}
+                    >
+                      <ImageLoader alt="good" src={`/${doc.images[0]}`} />
+                    </LazyLoad>
+                    <span className="card-title">{doc.name}</span>
+                    <a
+                      href="#!"
+                      onClick={() => onGoodAddToCartClick(doc)}
+                      className="btn-floating halfway-fab waves-effect waves-light red"
+                    >
+                      <i className="material-icons">add_shopping_cart</i>
+                    </a>
                   </div>
-                )
-              })}
-            </div>
-          </div>
+                  <div className="card-content">
+                    <b>{doc.category.name}</b>
+                    <p>Цена: {doc.price} ₽</p>
+                    <p>{doc.description}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </div>
         <div className="row row-center">
           <div className="col">
