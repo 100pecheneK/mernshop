@@ -1,3 +1,12 @@
+# Магазин на стеке MERN - Mongo Express React Nodejs
+
+Магазин с админкой.
+
+Для запуска необходим сервер монго. (mongodb://localhost:27017)
+
+Контент магазина настраивается из админки.
+
+
 # News 
 
 - @route   GET /api/news
